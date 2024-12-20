@@ -3,12 +3,12 @@ import { Schema, Document, models, model } from "mongoose";
 interface IJob extends Document {
   _id: string;
   title: string;
-  description: string;
+  description: string[];
   company: string;
   location: string;
   companyImg: string;
-  jobSpecification: string;
-  createdBy?: Schema.Types.ObjectId; // Optional field
+  salary: number;
+  jobSpecification: string[];
   createdAt: Date;
   updatedAt: Date;
 }

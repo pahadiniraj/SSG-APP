@@ -1,10 +1,9 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 interface IApplication extends Document {
-  jobId: mongoose.Schema.Types.ObjectId; // Reference to the applied job
-  fullName: string;
+  jobId: mongoose.Schema.Types.ObjectId;
   email: string;
-  resumeUrl?: string; // Optional URL for the uploaded resume
+  resumeUrl?: string;
   coverLetter: string;
   createdAt: Date;
 }
@@ -25,7 +24,7 @@ const ApplicationSchema: Schema = new Schema(
       required: true,
     },
     resume: {
-      type: String, // Optional field for resume file uploads
+      type: String,
     },
     coverLetter: {
       type: String,
