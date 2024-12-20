@@ -54,7 +54,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const JobPage: React.FC<JobPageProps> = ({ jobs, error }) => {
   if (error) {
-    return <p className="mt-32">Error: {error}</p>;
+    return <p className="mt-36 text-center w-full">Error: {error}</p>;
   }
 
   return (
