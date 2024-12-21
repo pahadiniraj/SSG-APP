@@ -18,7 +18,7 @@ const Navbar = () => {
   const links = [
     // { href: "/login", label: "Login" },
     // { href: "/register", label: "Register" },
-    { href: "/job/create-job", label: "Create Job" },
+    { href: "/create-job", label: "Create Job" },
     { href: "/job/favorite-job", label: "Favorite Jobs" },
   ];
 

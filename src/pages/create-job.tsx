@@ -2,9 +2,9 @@ import { ErrorMessage, Field, Form, Formik, FieldArray } from "formik";
 import { MdDelete, MdLibraryAdd } from "react-icons/md";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useRouter } from "next/navigation";
-import { createJobSchema } from "../../../utils/Yup-Validation/CreateJobSchema";
+import { createJobSchema } from "../../utils/Yup-Validation/CreateJobSchema";
 import { toast } from "react-toastify";
-import { useCreateJobMutation } from "../../../redux/services/job";
+import { useCreateJobMutation } from "../../redux/services/job";
 import { ClipLoader } from "react-spinners";
 
 interface CreateJobFormValues {

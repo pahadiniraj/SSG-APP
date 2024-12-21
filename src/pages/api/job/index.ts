@@ -8,11 +8,14 @@ import fs from "fs";
 
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: false, // Disable built-in body parser for file handling
   },
 };
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method === "POST") {
     const form = new IncomingForm();
 
@@ -32,8 +35,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           jobSpecification,
         } = fields;
 
-        console.log(fields);
-
         const titleValue = Array.isArray(title) ? title[0] : title;
         const companyValue = Array.isArray(company) ? company[0] : company;
         const locationValue = Array.isArray(location) ? location[0] : location;
@@ -46,7 +47,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           : jobSpecification;
 
         const companyImg = files.companyImg ? files.companyImg[0] : null;
-        console.log("files", companyImg?.filepath);
 
         if (!companyImg) {
           return res.status(400).json({ error: "Company image is required." });
@@ -128,9 +128,23 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         });
       }
     });
+  } else if (req.method === "GET") {
+    try {
+      await connect();
+
+      const jobs = await Job.find();
+
+      return res.status(200).json({
+        message: "Job data fetched successfully",
+        jobs,
+      });
+    } catch (error: any) {
+      console.error("Error fetching jobs:", error);
+      return res.status(500).json({
+        error: error.message,
+      });
+    }
   } else {
-    return res.status(405).json({
-      error: "Method Not Allowed",
-    });
+    return res.status(405).json({ error: "Method Not Allowed" });
   }
 }

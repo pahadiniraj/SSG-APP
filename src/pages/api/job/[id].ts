@@ -6,17 +6,28 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // Connect to the database
+  await connect();
+
   if (req.method === "GET") {
     try {
-      // Connect to the database
-      await connect();
+      // Extract the `id` from the query parameters
+      const { id } = req.query;
 
-      // Fetch all jobs from the database
-      const jobs = await Job.find();
+      console.log(id);
+
+      // Fetch the job by ID
+      const job = await Job.findById(id);
+
+      if (!job) {
+        return res.status(404).json({
+          error: "Job not found",
+        });
+      }
 
       return res.status(200).json({
         message: "Job data fetched successfully",
-        jobs,
+        job,
       });
     } catch (error: any) {
       console.log(error);

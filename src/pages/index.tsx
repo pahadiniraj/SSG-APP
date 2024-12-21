@@ -2,6 +2,7 @@ import HeroSection from "@/components/HeroSection";
 import axios from "axios";
 import { GetStaticProps } from "next";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { GiMoneyStack } from "react-icons/gi";
 import { MdLocationPin } from "react-icons/md";
 
@@ -30,7 +31,7 @@ export const getStaticProps: GetStaticProps = async () => {
     }
 
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/job/get-job`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/job`
     );
     const jobs: Job[] = response.data.jobs;
 
@@ -53,10 +54,10 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const JobPage: React.FC<JobPageProps> = ({ jobs, error }) => {
+  const router = useRouter();
   if (error) {
     return <p className="mt-36 text-center w-full">Error: {error}</p>;
   }
-
   return (
     <div>
       <HeroSection />
@@ -65,11 +66,12 @@ const JobPage: React.FC<JobPageProps> = ({ jobs, error }) => {
           <span className="border-b-2 pb-1 border-blue-600">Jobs</span> In Nepal
         </h1>
         <div className="flex gap-4 w-full">
-          <div className="border-2 rounded-md bg-slate-200/90 shadow-lg backdrop-blur-3xl h-[500px] my-5 grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 p-4 gap-4 w-full overflow-hidden overflow-y-auto">
+          <div className="border-2 rounded-md bg-slate-200/90 shadow-lg backdrop-blur-3xl h-[500px] my-5 grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 p-4 gap-4 w-full overflow-hidden overflow-y-auto ">
             {jobs.map((job) => (
-              <div
-                className="border border-slate-600/40 rounded-lg bg-white shadow-lg backdrop-blur-3xl h-[200px] p-2 relative"
+              <button
+                className="border border-slate-600/40 rounded-lg bg-white shadow-lg backdrop-blur-3xl h-[200px] p-2 relative hover:border-blue-500/40 hover:shadow-blue-300 hover:shadow-lg duration-200 "
                 key={job._id}
+                onClick={() => router.push(`/job/${job._id}`)}
               >
                 <div className="absolute right-1"></div>
                 <div className="flex gap-4">
@@ -93,7 +95,7 @@ const JobPage: React.FC<JobPageProps> = ({ jobs, error }) => {
                 <div className="flex justify-start mt-2 items-center gap-2">
                   <GiMoneyStack className="text-slate-600" />
                   <p className="text-sm font-medium text-slate-800/70">
-                    ${job.salary}
+                    NPR {job.salary}
                   </p>
                 </div>
                 <div>
@@ -107,7 +109,7 @@ const JobPage: React.FC<JobPageProps> = ({ jobs, error }) => {
                     {job.location}
                   </p>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         </div>
