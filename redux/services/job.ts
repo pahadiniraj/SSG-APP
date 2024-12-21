@@ -30,24 +30,35 @@ interface Job {
   updatedAt: string;
 }
 
+interface DeleteResponse {
+  message: string;
+  success?: boolean;
+}
 export const jobApi = createApi({
   reducerPath: "jobApi", // Correct the name if necessary
   baseQuery: fetchBaseQuery({
-    baseUrl: `/api/job`,
+    baseUrl: `/api/`,
     credentials: "include",
   }),
   endpoints: (builder) => ({
     createJob: builder.mutation<Response, CreateJob>({
       query: (formData) => {
         return {
-          url: "create-job",
+          url: "job",
           method: "POST",
           body: formData, // Pass FormData directly
           credentials: "include",
         };
       },
     }),
+    deleteJobById: builder.mutation<DeleteResponse, string>({
+      query: (id) => ({
+        url: `job/${id}`,
+        method: "DELETE",
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
-export const { useCreateJobMutation } = jobApi;
+export const { useCreateJobMutation, useDeleteJobByIdMutation } = jobApi;

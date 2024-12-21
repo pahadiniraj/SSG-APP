@@ -69,7 +69,7 @@ const JobPage: React.FC<JobPageProps> = ({ jobs, error }) => {
           <div className="border-2 rounded-md bg-slate-200/90 shadow-lg backdrop-blur-3xl h-[500px] my-5 grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 p-4 gap-4 w-full overflow-hidden overflow-y-auto ">
             {jobs.map((job) => (
               <button
-                className="border border-slate-600/40 rounded-lg bg-white shadow-lg backdrop-blur-3xl h-[200px] p-2 relative hover:border-blue-500/40 hover:shadow-blue-300 hover:shadow-lg duration-200 "
+                className="border border-slate-600/40 rounded-lg bg-white shadow-lg backdrop-blur-3xl h-[200px] p-2 relative hover:border-blue-600/40 hover:shadow-blue-300 hover:shadow-xl duration-200 hover:scale-105 "
                 key={job._id}
                 onClick={() => router.push(`/job/${job._id}`)}
               >
@@ -99,7 +99,7 @@ const JobPage: React.FC<JobPageProps> = ({ jobs, error }) => {
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-800/90">
+                  <p className="text-xs text-start ml-6 text-slate-800/90">
                     {job.description[0]}
                   </p>
                 </div>

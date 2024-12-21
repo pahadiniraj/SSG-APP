@@ -38,7 +38,10 @@ const CreateJob = () => {
       formData.append("salary", String(values.salary));
       formData.append("description", JSON.stringify(values.description));
       formData.append("location", values.location);
-      formData.append("jobSpecification", JSON.stringify(values.jobSpecification))
+      formData.append(
+        "jobSpecification",
+        JSON.stringify(values.jobSpecification)
+      );
       if (values.companyImg instanceof File) {
         formData.append("companyImg", values.companyImg);
       }
@@ -47,6 +50,7 @@ const CreateJob = () => {
       toast.success(response.message);
       console.log(response);
     } catch (error: any) {
+      console.log(error);
       toast.error(error.message || "Failed to create Job");
     }
   };
