@@ -1,6 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connect } from "../../../../lib/mongoDB";
 import Job from "../../../../lib/modals/job";
+import {
+  deleteFromCloudinary,
+  extractPublicIdFromUrl,
+} from "../../../../utils/cloudinary";
 
 export default async function handler(
   req: NextApiRequest,
@@ -62,6 +66,14 @@ export default async function handler(
         return res.status(404).json({
           error: "Job not found",
         });
+      }
+
+      // Extract the public ID of the company image from the URL
+      const companyImgPublicId = extractPublicIdFromUrl(deletedJob.companyImg);
+
+      if (companyImgPublicId) {
+        // If there is a company image, delete it from Cloudinary
+        await deleteFromCloudinary(companyImgPublicId);
       }
 
       return res.status(200).json({

@@ -10,7 +10,7 @@ interface CreateJob {
   jobSpecification: string[];
 }
 
-interface Response {
+interface CreateResponse {
   message: string;
   success?: boolean;
   job?: Job;
@@ -35,13 +35,13 @@ interface DeleteResponse {
   success?: boolean;
 }
 export const jobApi = createApi({
-  reducerPath: "jobApi", // Correct the name if necessary
+  reducerPath: "jobApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `/api/`,
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    createJob: builder.mutation<Response, CreateJob>({
+    createJob: builder.mutation<CreateResponse, CreateJob>({
       query: (formData) => {
         return {
           url: "job",

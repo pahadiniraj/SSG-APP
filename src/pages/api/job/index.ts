@@ -120,6 +120,7 @@ export default async function handler(
         return res.status(201).json({
           message: "Job created successfully",
           job: newJob,
+          success: true,
         });
       } catch (error) {
         console.error("Error creating job:", error);

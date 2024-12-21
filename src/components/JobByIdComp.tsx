@@ -5,48 +5,21 @@ import { GiMoneyStack } from "react-icons/gi";
 import { MdLocationPin } from "react-icons/md";
 import { useRouter } from "next/router";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { useDeleteJobByIdMutation } from "../../redux/services/job";
-import { toast } from "react-toastify";
-
-interface JobByIdCompProps {
-  job: {
-    _id: string;
-    title: string;
-    company: string;
-    companyImg: string;
-    location: string;
-    salary: number;
-    description: string[];
-    jobSpecification: string[];
-  };
-}
+import DeleteJobButton from "./DeleteJobById";
+import { JobByIdCompProps } from "../../utils/types/jobTypes";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+import { MdOutlineWork } from "react-icons/md";
+import { MdOutlineEditNote } from "react-icons/md";
 
 const JobByIdComp: React.FC<JobByIdCompProps> = ({ job }) => {
   const router = useRouter();
 
-  // State to track if the job is favorited
   const [isFavorite, setIsFavorite] = useState(false);
-  const [deletJobById] = useDeleteJobByIdMutation();
 
-  const handleGoBack = () => {
+  const handleEdit = () => {
     router.back();
   };
 
-  const handleDelete = async () => {
-    try {
-      const response = await deletJobById(job._id).unwrap(); // Unwrap the response
-
-      console.log(response);
-      if (response.success === true) {
-        toast.success(response.message || "Job deleted successfully");
-        router.push("/");
-      }
-    } catch (error: any) {
-      toast.error(error.message || "Failed to delete job");
-      console.error(error);
-    }
-  };
   const handleMakeFavorite = () => {
     // Toggle the favorite state
     setIsFavorite((prev) => !prev);
@@ -62,7 +35,13 @@ const JobByIdComp: React.FC<JobByIdCompProps> = ({ job }) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-lg">
+    <div className="max-w-4xl mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-lg relative ">
+      <button
+        onClick={() => router.push("/")}
+        className="flex absolute right-2 top-3 text-3xl hover:text-red-900 duration-200 hover:scale-105"
+      >
+        <IoArrowBackCircleSharp />
+      </button>
       <div className="flex flex-col sm:flex-row gap-6">
         <Image
           src={job.companyImg}
@@ -89,9 +68,7 @@ const JobByIdComp: React.FC<JobByIdCompProps> = ({ job }) => {
                 )}
               </button>
 
-              <button onClick={handleDelete}>
-                <MdDelete className="text-xl hover:text-red-600 duration-200 " />
-              </button>
+              <DeleteJobButton jobId={job._id} />
             </div>
           </div>
           <h2 className="text-xl font-medium text-gray-600 mt-2">
@@ -131,17 +108,18 @@ const JobByIdComp: React.FC<JobByIdCompProps> = ({ job }) => {
       {/* Buttons Section */}
       <div className="mt-8 flex flex-col sm:flex-row gap-4">
         <button
-          onClick={handleGoBack}
-          className="bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-500 text-white py-3 px-6 rounded-lg transform hover:scale-105 hover:shadow-xl transition duration-300 ease-in-out focus:outline-none"
+          onClick={handleEdit}
+          className="bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-500 text-white py-3 px-6 rounded-lg transform hover:scale-105 hover:shadow-xl transition duration-300 ease-in-out focus:outline-none flex justify-center items-center gap-2"
         >
-          Go Back
+          <MdOutlineEditNote className="text-2xl" />
+          Edit Job Details
         </button>
 
         <button
           onClick={handleApply}
-          className="bg-gradient-to-r from-green-500 via-green-600 to-teal-500 text-white py-3 px-6 rounded-lg transform hover:scale-105 hover:shadow-xl transition duration-300 ease-in-out focus:outline-none"
+          className="bg-gradient-to-r from-green-500 via-green-600 to-teal-500 text-white py-3 px-6 rounded-lg transform hover:scale-105 hover:shadow-xl transition duration-300 ease-in-out focus:outline-none flex justify-center items-center gap-2 "
         >
-          Apply
+          <MdOutlineWork className="text-xl " /> Apply
         </button>
       </div>
     </div>

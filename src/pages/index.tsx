@@ -5,22 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { GiMoneyStack } from "react-icons/gi";
 import { MdLocationPin } from "react-icons/md";
-
-interface Job {
-  _id: string;
-  title: string;
-  company: string;
-  companyImg: string;
-  location: string;
-  salary: number;
-  description: string[];
-  jobSpecification: string[];
-}
-
-interface JobPageProps {
-  jobs: Job[];
-  error?: string;
-}
+import { Job, JobPageProps } from "../../utils/types/jobTypes";
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
@@ -87,7 +72,7 @@ const JobPage: React.FC<JobPageProps> = ({ jobs, error }) => {
                   </div>
                   <div>
                     <p className="font-semibold">{job.title}</p>
-                    <p className="text-sm font-medium text-slate-800/70">
+                    <p className="text-sm font-medium text-slate-800/70 text-start">
                       {job.company}
                     </p>
                   </div>

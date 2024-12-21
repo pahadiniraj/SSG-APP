@@ -2,22 +2,7 @@ import React from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
 import axios from "axios";
 import JobByIdComp from "@/components/JobByIdComp";
-
-interface Job {
-  _id: string;
-  title: string;
-  company: string;
-  companyImg: string;
-  location: string;
-  salary: number;
-  description: string[];
-  jobSpecification: string[];
-}
-
-interface JobPageProps {
-  job: Job | null;
-  error?: string;
-}
+import { Job, JobByIdPageProps } from "../../../utils/types/jobTypes";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
@@ -27,24 +12,22 @@ export const getStaticPaths: GetStaticPaths = async () => {
       );
     }
 
-    // Fetch all job IDs
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/api/job`
     );
     const jobs: Job[] = response.data.jobs;
 
-    // Map jobs to paths
     const paths = jobs.map((job) => ({
       params: { id: job._id },
     }));
 
     return {
-      paths, // Statically generate these paths
-      fallback: "blocking", // For on-demand rendering of new paths
+      paths,
+      fallback: "blocking",
     };
   } catch (error) {
     console.error("Error fetching job paths:", error);
-    return { paths: [], fallback: "blocking" }; // Fallback if API fails
+    return { paths: [], fallback: "blocking" };
   }
 };
 
@@ -68,7 +51,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       props: {
         job,
       },
-      revalidate: 60, // Revalidate every 60 seconds
+      revalidate: 60,
     };
   } catch (error: any) {
     console.error("Error fetching job data for SSG:", error.message);
@@ -82,7 +65,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 };
 
-const JobById: React.FC<JobPageProps> = ({ job, error }) => {
+const JobById: React.FC<JobByIdPageProps> = ({ job, error }) => {
   if (error || !job) {
     return (
       <p className="mt-36 text-center w-full">
