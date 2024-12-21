@@ -65,7 +65,7 @@ const JobPage: React.FC<JobPageProps> = ({ jobs, error }) => {
           <span className="border-b-2 pb-1 border-blue-600">Jobs</span> In Nepal
         </h1>
         <div className="flex gap-4 w-full">
-          <div className="border-2 rounded-md bg-slate-200/90 shadow-lg backdrop-blur-3xl h-[500px] my-5 grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 p-4 gap-4 w-full">
+          <div className="border-2 rounded-md bg-slate-200/90 shadow-lg backdrop-blur-3xl h-[500px] my-5 grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 p-4 gap-4 w-full overflow-hidden overflow-y-auto">
             {jobs.map((job) => (
               <div
                 className="border border-slate-600/40 rounded-lg bg-white shadow-lg backdrop-blur-3xl h-[200px] p-2 relative"
