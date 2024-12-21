@@ -278,7 +278,7 @@ const CreateJob = () => {
               <button
                 type="submit"
                 disabled={!isValid || isLoading}
-                className={`w-full flex justify-center items-center bg-blue-500 text-white p-2 rounded-md mt-4 ${
+                className={`w-full flex justify-center items-center bg-blue-500 text-white p-2 rounded-md mt-4 hover:bg-blue-600 duration-200 ${
                   isLoading ? "cursor-not-allowed opacity-50" : ""
                 }`}
               >
