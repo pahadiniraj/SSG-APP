@@ -6,10 +6,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdClose } from "react-icons/md";
 import LOGO from "../../public/Image/LOGO.png";
+import { useAppSelector } from "../../redux/hooks/hooks";
+import { RootState } from "../../redux/store";
 
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
   const pathname = usePathname();
+  const favorites = useAppSelector(
+    (state: RootState) => state.favorites.favorites
+  );
 
   const isActive = (href: string) => pathname === href;
 
@@ -18,7 +23,7 @@ const Navbar = () => {
   const links = [
     // { href: "/login", label: "Login" },
     // { href: "/register", label: "Register" },
-    { href: "/create-job", label: "Create Job" },
+    { href: "/create-job", label: "Create Job", number: "" },
     { href: "/favorite-job", label: "Favorite Jobs" },
   ];
 
@@ -31,17 +36,23 @@ const Navbar = () => {
 
         <div className="hidden md:flex space-x-8 items-center">
           {links.map((link, index) => (
-            <Link
-              key={index}
-              href={link.href}
-              className={`px-4 py-2 rounded-md font-semibold text-gray-700 transition duration-300 ${
-                isActive(link.href)
-                  ? "text-blue-600 bg-blue-100"
-                  : "hover:bg-blue-100 hover:text-blue-600"
-              }`}
-            >
-              {link.label}
-            </Link>
+            <div key={index} className="relative">
+              <Link
+                href={link.href}
+                className={`px-4 py-2 rounded-md font-semibold text-gray-700 transition duration-300 ${
+                  isActive(link.href)
+                    ? "text-blue-600 bg-blue-100"
+                    : "hover:bg-blue-100 hover:text-blue-600"
+                }`}
+              >
+                {link.label}
+              </Link>
+              {link.label === "Favorite Jobs" && favorites.length > 0 && (
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs">
+                  {favorites.length}
+                </div>
+              )}
+            </div>
           ))}
         </div>
 
@@ -60,9 +71,9 @@ const Navbar = () => {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 200 }}
-            className="fixed inset-0  z-50 md:hidden "
+            className="fixed inset-0 z-50 md:hidden"
           >
-            <div className=" bg-blue-700/95 h-screen relative ">
+            <div className="bg-blue-700/95 h-screen relative">
               <div className="pt-14 px-2">
                 {links.map((link, index) => (
                   <Link

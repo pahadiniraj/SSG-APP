@@ -1,7 +1,7 @@
-import mongoose, { Schema, Document } from "mongoose";
+import { Schema, Document, model, models } from "mongoose";
 
 interface IApplication extends Document {
-  jobId: mongoose.Schema.Types.ObjectId;
+  jobId: Schema.Types.ObjectId;
   email: string;
   resumeUrl?: string;
   coverLetter: string;
@@ -11,7 +11,7 @@ interface IApplication extends Document {
 const ApplicationSchema: Schema = new Schema(
   {
     jobId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Job",
       required: true,
     },
@@ -36,5 +36,7 @@ const ApplicationSchema: Schema = new Schema(
   }
 );
 
-export default mongoose.models.Application ||
-  mongoose.model<IApplication>("Application", ApplicationSchema);
+const Application =
+  models.Application || model<IApplication>("Application", ApplicationSchema);
+
+export default Application;
