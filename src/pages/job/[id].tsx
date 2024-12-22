@@ -1,21 +1,26 @@
 import React from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
-import axios from "axios";
 import JobByIdComp from "@/components/JobByIdComp";
 import { Job, JobByIdPageProps } from "../../../utils/types/jobTypes";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    if (!process.env.NEXT_PUBLIC_API_URL) {
-      throw new Error(
-        "NEXT_PUBLIC_API_URL environment variable is not defined"
-      );
+    // if (!process.env.NEXT_PUBLIC_API_URL) {
+    //   throw new Error(
+    //     "NEXT_PUBLIC_API_URL environment variable is not defined"
+    //   );
+    // }
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL || ""}/api/job`
+    );
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch job paths: ${response.statusText}`);
     }
 
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/job`
-    );
-    const jobs: Job[] = response.data.jobs;
+    const data = await response.json();
+    const jobs: Job[] = data.jobs;
 
     const paths = jobs.map((job) => ({
       params: { id: job._id },
@@ -36,16 +41,24 @@ export const getStaticProps: GetStaticProps = async (context) => {
   console.log("id in client", id);
 
   try {
-    if (!process.env.NEXT_PUBLIC_API_URL) {
-      throw new Error(
-        "NEXT_PUBLIC_API_URL environment variable is not defined"
-      );
+    // if (!process.env.NEXT_PUBLIC_API_URL) {
+    //   throw new Error(
+    //     "NEXT_PUBLIC_API_URL environment variable is not defined"
+    //   );
+    // }
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL || ""}/api/job/${id}`
+    );
+
+    console.log(response);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch job data: ${response.statusText}`);
     }
 
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/job/${id}`
-    );
-    const job: Job = response.data.job;
+    const data = await response.json();
+    const job: Job = data.job;
 
     return {
       props: {
