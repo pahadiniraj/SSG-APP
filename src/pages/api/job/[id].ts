@@ -20,8 +20,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await connect();
-
   const { id } = req.query;
   if (!id) {
     return res.status(400).json({ error: "ID is required" });
@@ -29,6 +27,8 @@ export default async function handler(
 
   if (req.method === "GET") {
     try {
+      await connect();
+
       const job = await Job.findById(id);
 
       if (!job) {
@@ -125,6 +125,8 @@ export default async function handler(
       }
 
       try {
+        await connect();
+
         const job = await Job.findById(id);
 
         if (!job) {

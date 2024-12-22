@@ -8,11 +8,11 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import DeleteJobButton from "./DeleteJobById";
 import { JobByIdCompProps } from "../../utils/types/jobTypes";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
-import { MdOutlineWork } from "react-icons/md";
 import EditJobById from "./EditJobById";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { RootState } from "../../redux/store";
 import { addFavorite, removeFavorite } from "../../redux/slice/favoriteSlice";
+import ApplyJob from "./ApplyJob";
 
 const JobByIdComp: React.FC<JobByIdCompProps> = ({ job }) => {
   const router = useRouter();
@@ -21,19 +21,14 @@ const JobByIdComp: React.FC<JobByIdCompProps> = ({ job }) => {
     (state: RootState) => state.favorites.favorites
   );
 
-  const isJobFavorite = favorites.some((favJob) => favJob._id === job._id);
+  const isJobFavorite = favorites.some((favJob: any) => favJob._id === job._id);
 
   const handleMakeFavorite = () => {
     if (isJobFavorite) {
-      dispatch(removeFavorite(job._id)); // Remove from favorites
+      dispatch(removeFavorite(job._id));
     } else {
-      dispatch(addFavorite(job)); // Add to favorites
+      dispatch(addFavorite(job));
     }
-  };
-
-  const handleApply = () => {
-    // Redirect user to the application page or form (can be a modal, another page, etc.)
-    alert("Redirecting to apply...");
   };
 
   return (
@@ -110,12 +105,7 @@ const JobByIdComp: React.FC<JobByIdCompProps> = ({ job }) => {
       {/* Buttons Section */}
       <div className="mt-8 flex flex-col sm:flex-row gap-4">
         <EditJobById jobId={job._id} />
-        <button
-          onClick={handleApply}
-          className="bg-gradient-to-r from-green-500 via-green-600 to-teal-500 text-white py-3 px-6 rounded-lg transform hover:scale-105 hover:shadow-xl transition duration-300 ease-in-out focus:outline-none flex justify-center items-center gap-2 "
-        >
-          <MdOutlineWork className="text-xl " /> Apply
-        </button>
+        <ApplyJob jobId={job._id} />
       </div>
     </div>
   );
