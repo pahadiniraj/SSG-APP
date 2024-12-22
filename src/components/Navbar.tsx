@@ -22,14 +22,14 @@ const Navbar = () => {
 
   const links = [
     // { href: "/login", label: "Login" },
-    // { href: "/register", label: "Register" },
-    { href: "/create-job", label: "Create Job", number: "" },
+    { href: "/create-job", label: "Create Job" },
     { href: "/favorite-job", label: "Favorite Jobs" },
+    { href: "/applications", label: "Applications" },
   ];
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-md z-50">
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div className="container mx-auto px-2 py-3 flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <Image src={LOGO} alt="Job Finder" className="w-36 h-auto" priority />
         </Link>
@@ -41,7 +41,7 @@ const Navbar = () => {
                 href={link.href}
                 className={`px-4 py-2 rounded-md font-semibold text-gray-700 transition duration-300 ${
                   isActive(link.href)
-                    ? "text-blue-600 bg-blue-100"
+                    ? "text-blue-700 bg-blue-100"
                     : "hover:bg-blue-100 hover:text-blue-600"
                 }`}
               >
@@ -74,16 +74,16 @@ const Navbar = () => {
             className="fixed inset-0 z-50 md:hidden"
           >
             <div className="bg-blue-700/95 h-screen relative">
-              <div className="pt-14 px-2">
+              <div className="pt-14 px-2 flex gap-3 flex-col">
                 {links.map((link, index) => (
                   <Link
                     key={index}
                     href={link.href}
                     onClick={() => setShowNav(false)}
-                    className={`block text-xl font-semibold text-white p-2 rounded-md transition duration-300 ${
+                    className={`block text-xl font-semibold text-white  p-2 rounded-md transition duration-300 ${
                       isActive(link.href)
-                        ? "text-blue-600 bg-blue-100"
-                        : "hover:bg-blue-100 hover:text-blue-600"
+                        ? "text-blue-700 bg-blue-100"
+                        : "hover:bg-blue-100 hover:text-blue-800"
                     }`}
                   >
                     {link.label}

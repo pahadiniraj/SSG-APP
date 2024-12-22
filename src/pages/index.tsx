@@ -49,7 +49,7 @@ const JobPage: React.FC<JobPageProps> = ({ jobs, error }) => {
   return (
     <div>
       <HeroSection />
-      <div className="md:m-10">
+      <div className=" container mx-auto my-10 px-5 ">
         <h1 className="text-2xl m-4 md:m-0">
           <span className="border-b-2 pb-1 border-blue-600">Jobs</span> In Nepal
         </h1>
@@ -81,7 +81,7 @@ const JobPage: React.FC<JobPageProps> = ({ jobs, error }) => {
                   </div>
                 </div>
                 <div className="flex justify-start mt-2 items-center gap-2">
-                  <GiMoneyStack className="text-slate-600" />
+                  <GiMoneyStack className=" text-green-700" />
                   <p className="text-sm font-medium text-slate-800/70">
                     NPR {job.salary}
                   </p>

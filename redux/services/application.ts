@@ -49,9 +49,9 @@ export const applicationApi = createApi({
       },
     }),
 
-    getJobById: builder.query<GetJobResponse, string>({
-      query: (jobId) => ({
-        url: `job/${jobId}`,
+    getApplications: builder.query<GetJobResponse, string>({
+      query: () => ({
+        url: `application`,
         method: "GET",
         credentials: "include",
       }),
@@ -59,5 +59,5 @@ export const applicationApi = createApi({
   }),
 });
 
-export const { useCreateApplicationMutation, useGetJobByIdQuery } =
+export const { useCreateApplicationMutation, useGetApplicationsQuery } =
   applicationApi;

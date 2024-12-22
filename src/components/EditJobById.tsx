@@ -26,7 +26,7 @@ const EditJobById: React.FC<JobIdButtonProps> = ({ jobId }) => {
       {/* Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative w-full max-w-md bg-white p-6 md:h-[700px] h-screen overflow-y-auto md:rounded-lg shadow-lg md:w-[600px] ">
+          <div className="relative w-full max-w-md bg-white p-6 md:h-[600px] h-screen overflow-y-auto md:rounded-lg shadow-lg md:w-[600px] ">
             {/* Close Button */}
             <button
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition duration-200"
