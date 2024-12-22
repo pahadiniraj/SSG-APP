@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { jobApi } from "./services/job";
+import favoritesReducer from "./slice/favoriteSlice";
 
 export const store = configureStore({
   reducer: {
     [jobApi.reducerPath]: jobApi.reducer,
+    favorites: favoritesReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

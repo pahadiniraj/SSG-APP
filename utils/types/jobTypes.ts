@@ -56,13 +56,12 @@ export interface Job {
   description: string[];
   company: string;
   location: string;
-  companyImg:  string;
+  companyImg: string;
   jobSpecification: string[];
-  __v: number;
-  createdAt: string;
-  updatedAt: string;
+  __v?: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
-
 
 export interface JobIdButtonProps {
   jobId: string;

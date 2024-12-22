@@ -1,5 +1,5 @@
 // components/JobByIdComp.tsx
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { GiMoneyStack } from "react-icons/gi";
 import { MdLocationPin } from "react-icons/md";
@@ -10,19 +10,25 @@ import { JobByIdCompProps } from "../../utils/types/jobTypes";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { MdOutlineWork } from "react-icons/md";
 import EditJobById from "./EditJobById";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { RootState } from "../../redux/store";
+import { addFavorite, removeFavorite } from "../../redux/slice/favoriteSlice";
 
 const JobByIdComp: React.FC<JobByIdCompProps> = ({ job }) => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector(
+    (state: RootState) => state.favorites.favorites
+  );
 
-  const [isFavorite, setIsFavorite] = useState(false);
+  const isJobFavorite = favorites.some((favJob) => favJob._id === job._id);
 
   const handleMakeFavorite = () => {
-    // Toggle the favorite state
-    setIsFavorite((prev) => !prev);
-    // Logic to mark the job as favorite (e.g., save to localStorage or update state globally)
-    alert(
-      isFavorite ? "Job removed from favorites!" : "Job added to favorites!"
-    );
+    if (isJobFavorite) {
+      dispatch(removeFavorite(job._id)); // Remove from favorites
+    } else {
+      dispatch(addFavorite(job)); // Add to favorites
+    }
   };
 
   const handleApply = () => {
@@ -57,7 +63,7 @@ const JobByIdComp: React.FC<JobByIdCompProps> = ({ job }) => {
                 onClick={handleMakeFavorite}
                 className={` text-white h-8 w-8 flex justify-center items-center transform hover:scale-105  transition duration-300 ease-in-out focus:outline-none rounded-full shadow-2xl border-black/50 border`}
               >
-                {isFavorite ? (
+                {isJobFavorite ? (
                   <FaHeart className="text-red-600" />
                 ) : (
                   <FaRegHeart className="text-black/70" />
