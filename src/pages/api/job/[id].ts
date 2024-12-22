@@ -12,7 +12,7 @@ import fs from "fs";
 
 export const config = {
   api: {
-    bodyParser: false, // Disable Next.js's built-in bodyParser for `formidable`
+    bodyParser: false,
   },
 };
 
@@ -23,6 +23,9 @@ export default async function handler(
   await connect();
 
   const { id } = req.query;
+  if (!id) {
+    return res.status(400).json({ error: "ID is required" });
+  }
 
   if (req.method === "GET") {
     try {

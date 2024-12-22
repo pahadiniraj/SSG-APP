@@ -9,16 +9,12 @@ import DeleteJobButton from "./DeleteJobById";
 import { JobByIdCompProps } from "../../utils/types/jobTypes";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { MdOutlineWork } from "react-icons/md";
-import { MdOutlineEditNote } from "react-icons/md";
+import EditJobById from "./EditJobById";
 
 const JobByIdComp: React.FC<JobByIdCompProps> = ({ job }) => {
   const router = useRouter();
 
   const [isFavorite, setIsFavorite] = useState(false);
-
-  const handleEdit = () => {
-    router.back();
-  };
 
   const handleMakeFavorite = () => {
     // Toggle the favorite state
@@ -107,14 +103,7 @@ const JobByIdComp: React.FC<JobByIdCompProps> = ({ job }) => {
 
       {/* Buttons Section */}
       <div className="mt-8 flex flex-col sm:flex-row gap-4">
-        <button
-          onClick={handleEdit}
-          className="bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-500 text-white py-3 px-6 rounded-lg transform hover:scale-105 hover:shadow-xl transition duration-300 ease-in-out focus:outline-none flex justify-center items-center gap-2"
-        >
-          <MdOutlineEditNote className="text-2xl" />
-          Edit Job Details
-        </button>
-
+        <EditJobById jobId={job._id} />
         <button
           onClick={handleApply}
           className="bg-gradient-to-r from-green-500 via-green-600 to-teal-500 text-white py-3 px-6 rounded-lg transform hover:scale-105 hover:shadow-xl transition duration-300 ease-in-out focus:outline-none flex justify-center items-center gap-2 "

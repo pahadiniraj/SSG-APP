@@ -19,7 +19,7 @@ const Navbar = () => {
     // { href: "/login", label: "Login" },
     // { href: "/register", label: "Register" },
     { href: "/create-job", label: "Create Job" },
-    { href: "/job/favorite-job", label: "Favorite Jobs" },
+    { href: "/favorite-job", label: "Favorite Jobs" },
   ];
 
   return (

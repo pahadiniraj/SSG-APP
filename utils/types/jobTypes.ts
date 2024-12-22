@@ -62,3 +62,18 @@ export interface Job {
   createdAt: string;
   updatedAt: string;
 }
+
+
+export interface JobIdButtonProps {
+  jobId: string;
+}
+
+export interface CreateJobFormValues {
+  title: string;
+  company: string;
+  salary: number;
+  description: string[];
+  location: string;
+  jobSpecification: string[];
+  companyImg: File | string;
+}

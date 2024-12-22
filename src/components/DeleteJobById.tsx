@@ -5,12 +5,9 @@ import { useDeleteJobByIdMutation } from "../../redux/services/job";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
+import { JobIdButtonProps } from "../../utils/types/jobTypes";
 
-interface DeleteJobButtonProps {
-  jobId: string;
-}
-
-const DeleteJobButton: React.FC<DeleteJobButtonProps> = ({ jobId }) => {
+const DeleteJobButton: React.FC<JobIdButtonProps> = ({ jobId }) => {
   const router = useRouter();
   const [deleteJobById, { isLoading }] = useDeleteJobByIdMutation();
 
