@@ -9,12 +9,6 @@ import Pegination from "@/components/Pegination";
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    if (!process.env.NEXT_PUBLIC_API_URL) {
-      throw new Error(
-        "NEXT_PUBLIC_API_URL environment variable is not defined"
-      );
-    }
-
     const res = await fetch(`/api/job`);
     if (!res.ok) {
       throw new Error("Failed to fetch job data.");
