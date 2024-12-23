@@ -5,15 +5,7 @@ import { Job, JobByIdPageProps } from "../../../utils/types/jobTypes";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    // if (!process.env.NEXT_PUBLIC_API_URL) {
-    //   throw new Error(
-    //     "NEXT_PUBLIC_API_URL environment variable is not defined"
-    //   );
-    // }
-
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL || ""}/api/job`
-    );
+    const response = await fetch(`/api/job`);
     console.log(response);
     if (!response.ok) {
       throw new Error(`Failed to fetch job paths: ${response.statusText}`);
@@ -47,9 +39,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       );
     }
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL || ""}/api/job/${id}`
-    );
+    const response = await fetch(`/api/job/${id}`);
 
     console.log(response);
 

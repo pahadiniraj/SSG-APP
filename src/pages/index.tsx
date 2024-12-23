@@ -15,7 +15,7 @@ export const getStaticProps: GetStaticProps = async () => {
       );
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}/api/job`);
+    const res = await fetch(`/api/job`);
     if (!res.ok) {
       throw new Error("Failed to fetch job data.");
     }

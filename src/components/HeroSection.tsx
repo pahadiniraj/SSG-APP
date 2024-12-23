@@ -15,7 +15,7 @@ const HeroSection = () => {
           </div>
           <input
             type="text"
-            placeholder="Search..."
+            placeholder="Search Unavailable...."
             className="outline-none px-2 py-1 md:w-72  rounded-lg "
           />
 
