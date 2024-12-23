@@ -37,7 +37,7 @@ const EditJobById: React.FC<JobIdButtonProps> = ({ jobId }) => {
 
             {/* Modal Content */}
             <div className="">
-              <FormikEditJob jobId={jobId} />
+              <FormikEditJob jobId={jobId} setIsOpen={setIsOpen} />
             </div>
           </div>
         </div>

@@ -9,7 +9,13 @@ import {
 } from "../../redux/services/job";
 import { updateJobSchema } from "../../utils/Yup-Validation/UpdateJobSchema";
 
-const FormikEditJob = ({ jobId }: { jobId: string }) => {
+const FormikEditJob = ({
+  jobId,
+  setIsOpen,
+}: {
+  jobId: string;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [updateJob, { isLoading: isUpdating }] = useUpdateJobByIdMutation();
   const { data, error, isLoading, refetch } = useGetJobByIdQuery(jobId);
 
@@ -56,6 +62,7 @@ const FormikEditJob = ({ jobId }: { jobId: string }) => {
       }).unwrap();
       toast.success(response.message);
       refetch();
+      setIsOpen(false);
     } catch (error: any) {
       console.error(error);
       toast.error(error.message || "Failed to update Job");
