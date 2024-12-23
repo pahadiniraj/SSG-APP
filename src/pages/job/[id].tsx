@@ -41,11 +41,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
   console.log("id in client", id);
 
   try {
-    // if (!process.env.NEXT_PUBLIC_API_URL) {
-    //   throw new Error(
-    //     "NEXT_PUBLIC_API_URL environment variable is not defined"
-    //   );
-    // }
+    if (!process.env.NEXT_PUBLIC_API_URL) {
+      throw new Error(
+        "NEXT_PUBLIC_API_URL environment variable is not defined"
+      );
+    }
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL || ""}/api/job/${id}`

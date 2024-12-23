@@ -5,7 +5,7 @@ import { ClipLoader } from "react-spinners";
 
 const Application = ({ applicationId }: { applicationId: string }) => {
   const { data, error, isLoading } = useGetApplicationsQuery(applicationId, {
-    pollingInterval: 30000, // Refetch every 30 seconds
+    pollingInterval: 10000,
   });
 
   if (isLoading) {

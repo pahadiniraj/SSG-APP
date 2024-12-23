@@ -4,10 +4,12 @@ import { toast } from "react-toastify";
 import { useCreateApplicationMutation } from "../../redux/services/application";
 import { CreateApplicationFormValues } from "../../utils/types/applicationType";
 import applicationValidationSchema from "../../utils/Yup-Validation/CreateApplicationSchema";
+import { useRouter } from "next/router";
 
 const FormikCreateApplication = ({ jobId }: { jobId: string }) => {
   const [createApplication, { isLoading: isSubmitting }] =
     useCreateApplicationMutation();
+  const router = useRouter();
 
   // Initial values for the form
   const initialValues: CreateApplicationFormValues = {
@@ -37,7 +39,7 @@ const FormikCreateApplication = ({ jobId }: { jobId: string }) => {
         formData as unknown as any
       ).unwrap();
       toast.success(response.message);
-      console.log("response", response);
+      router.push("/applications");
     } catch (error: any) {
       console.error(error);
       const errorMessage =

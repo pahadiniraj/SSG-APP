@@ -21,10 +21,25 @@ export interface Job {
   description: string[];
   jobSpecification: string[];
 }
+// utils/types/jobTypes.ts
+export interface SearchParams {
+  [key: string]: string | string[] | undefined;
+}
+
+export interface Job {
+  _id: string;
+  title: string;
+  company: string;
+  salary: number;
+  location: string;
+  description: string[];
+  companyImg: string;
+}
 
 export interface JobPageProps {
   jobs: Job[];
   error?: string;
+  searchParams: SearchParams;
 }
 
 export interface JobById {
