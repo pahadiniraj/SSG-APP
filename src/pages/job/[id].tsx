@@ -11,9 +11,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
       );
     }
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL || ""}/api/job`
-    );
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
+    const response = await fetch(`${API_URL}/api/job`);
     console.log(response);
     if (!response.ok) {
       throw new Error(`Failed to fetch job paths: ${response.statusText}`);
@@ -47,9 +47,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
       );
     }
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL || ""}/api/job/${id}`
-    );
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
+    const response = await fetch(`${API_URL}/api/job/${id}`);
 
     console.log(response);
 
