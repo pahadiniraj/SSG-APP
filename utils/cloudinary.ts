@@ -14,6 +14,7 @@ const uploadOnCloudinary = async (
   return new Promise((resolve, reject) => {
     const options: UploadApiOptions = {
       resource_type: "auto",
+      type: "upload",
     };
 
     if (fileType === "image" && resize) {
@@ -68,10 +69,10 @@ const deleteFromCloudinary = async (publicId: string): Promise<void> => {
 
 const extractPublicIdFromUrl = (url: string): string | null => {
   try {
-    const urlWithoutQuery = url.split("?")[0]; 
+    const urlWithoutQuery = url.split("?")[0];
     const segments = urlWithoutQuery.split("/");
     const publicIdWithExtension = segments[segments.length - 1];
-    const publicId = publicIdWithExtension.split(".")[0]; 
+    const publicId = publicIdWithExtension.split(".")[0];
 
     console.log("Extracted publicId:", publicId);
     return publicId;

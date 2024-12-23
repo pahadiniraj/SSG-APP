@@ -1,6 +1,7 @@
 import React from "react";
 import { useGetApplicationsQuery } from "../../redux/services/application";
 import Image from "next/image";
+import { ClipLoader } from "react-spinners";
 
 const Application = ({ applicationId }: { applicationId: string }) => {
   const { data, error, isLoading } = useGetApplicationsQuery(applicationId, {
@@ -8,7 +9,11 @@ const Application = ({ applicationId }: { applicationId: string }) => {
   });
 
   if (isLoading) {
-    return <div className="mt-32 p-5 text-center">Loading...</div>;
+    return (
+      <div className="h-screen p-5 flex justify-center items-center">
+        <ClipLoader color="#000" size={35} />
+      </div>
+    );
   }
 
   if (error) {
@@ -27,11 +32,11 @@ const Application = ({ applicationId }: { applicationId: string }) => {
     );
   }
 
-  // Group applications by company
+  // Group applications by company name
   const groupedApplications = data.applications.reduce((acc: any, app: any) => {
-    const company = app.jobId.company;
-    if (!acc[company]) acc[company] = [];
-    acc[company].push(app);
+    const companyName = app.jobId?.company || "Unknown Company"; // Fallback for undefined company
+    if (!acc[companyName]) acc[companyName] = [];
+    acc[companyName].push(app);
     return acc;
   }, {});
 
@@ -41,32 +46,32 @@ const Application = ({ applicationId }: { applicationId: string }) => {
         <h1 className="text-4xl font-bold mb-6">Applications</h1>
       </div>
 
-      {Object.keys(groupedApplications).map((company) => (
+      {Object.keys(groupedApplications).map((companyName) => (
         <div
-          key={company}
+          key={companyName}
           className="mb-12 border border-gray-300 rounded-lg bg-gray-50 p-6 shadow-md"
         >
           {/* Company Header */}
           <div className="flex items-center gap-4 border-b border-gray-200 pb-4 mb-4 bg-white p-4 rounded-t-lg">
             <Image
               src={
-                groupedApplications[company][0]?.jobId?.companyImg ||
+                groupedApplications[companyName][0]?.jobId?.companyImg ||
                 "/placeholder-image.png"
               }
-              alt={`${company} Logo`}
+              alt={`${companyName} Logo`}
               className="rounded-full"
               width={64}
               height={64}
             />
-            <h2 className="text-2xl font-semibold">{company}</h2>
+            <h2 className="text-2xl font-semibold">{companyName}</h2>
           </div>
 
           {/* Applications for this company */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {groupedApplications[company].map((application: any) => {
+            {groupedApplications[companyName].map((application: any) => {
               const { jobId, fullname, email, resume, coverLetter, createdAt } =
                 application;
-              const { title, location, salary, description } = jobId;
+              const { title, location, salary, description } = jobId || {};
 
               return (
                 <div
@@ -77,20 +82,21 @@ const Application = ({ applicationId }: { applicationId: string }) => {
                   <div className="mb-4">
                     <h3 className="text-lg font-bold mb-2">Job Details</h3>
                     <p>
-                      <strong>Title:</strong> {title}
+                      <strong>Title:</strong> {title || "N/A"}
                     </p>
                     <p>
-                      <strong>Location:</strong> {location}
+                      <strong>Location:</strong> {location || "N/A"}
                     </p>
                     <p>
-                      <strong>Salary:</strong> NPR {salary}
+                      <strong>Salary:</strong> NPR {salary || "N/A"}
                     </p>
                     <div className="mt-2">
                       <strong>Description:</strong>
                       <ul className="list-disc list-inside text-sm text-gray-600">
-                        {description.map((desc: string, index: number) => (
-                          <li key={index}>{desc}</li>
-                        ))}
+                        {description &&
+                          description.map((desc: string, index: number) => (
+                            <li key={index}>{desc}</li>
+                          ))}
                       </ul>
                     </div>
                   </div>
@@ -106,28 +112,32 @@ const Application = ({ applicationId }: { applicationId: string }) => {
                     <p>
                       <strong>Email:</strong> {email}
                     </p>
-                    <p>
-                      <strong>Resume:</strong>{" "}
-                      <a
-                        href={resume}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 underline"
-                      >
-                        View Resume
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Cover Letter:</strong>{" "}
-                      <a
-                        href={coverLetter}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 underline"
-                      >
-                        View Cover Letter
-                      </a>
-                    </p>
+                    {resume && (
+                      <p>
+                        <strong>Resume:</strong>{" "}
+                        <a
+                          href={resume}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 underline"
+                        >
+                          View Resume
+                        </a>
+                      </p>
+                    )}
+                    {coverLetter && (
+                      <p>
+                        <strong>Cover Letter:</strong>{" "}
+                        <a
+                          href={coverLetter}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 underline"
+                        >
+                          View Cover Letter
+                        </a>
+                      </p>
+                    )}
                     <p>
                       <strong>Submitted At:</strong>{" "}
                       {new Date(createdAt).toLocaleString()}

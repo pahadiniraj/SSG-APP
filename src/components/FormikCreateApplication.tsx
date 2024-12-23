@@ -51,7 +51,7 @@ const FormikCreateApplication = ({ jobId }: { jobId: string }) => {
 
   // Handle loading state, if data is still being fetched
   if (isSubmitting) {
-    return <ClipLoader color="#000" size={50} />;
+    return <ClipLoader color="#000" size={25} />;
   }
 
   // Handle error state

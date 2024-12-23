@@ -80,10 +80,10 @@ const Navbar = () => {
                     key={index}
                     href={link.href}
                     onClick={() => setShowNav(false)}
-                    className={`block text-xl font-semibold text-white  p-2 rounded-md transition duration-300 ${
+                    className={`block text-xl font-semibold   p-2 rounded-md transition duration-300 ${
                       isActive(link.href)
                         ? "text-blue-700 bg-blue-100"
-                        : "hover:bg-blue-100 hover:text-blue-800"
+                        : "hover:bg-blue-600 text-white"
                     }`}
                   >
                     {link.label}
