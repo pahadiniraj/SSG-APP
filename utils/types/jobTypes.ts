@@ -39,7 +39,10 @@ export interface Job {
 export interface JobPageProps {
   jobs: Job[];
   error?: string;
-  searchParams: SearchParams;
+  searchParams?: SearchParams;
+  page: number;
+  jobLength?: number;
+  jobsPerPage: number;
 }
 
 export interface JobById {

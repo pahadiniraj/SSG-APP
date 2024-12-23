@@ -6,13 +6,16 @@ import { MdLocationPin } from "react-icons/md";
 import { useRouter } from "next/router";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import DeleteJobButton from "./DeleteJobById";
-import { JobByIdCompProps } from "../../utils/types/jobTypes";
+import { JobByIdCompProps } from "../../../utils/types/jobTypes";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import EditJobById from "./EditJobById";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import { RootState } from "../../redux/store";
-import { addFavorite, removeFavorite } from "../../redux/slice/favoriteSlice";
-import ApplyJob from "./ApplyJob";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
+import { RootState } from "../../../redux/store";
+import {
+  addFavorite,
+  removeFavorite,
+} from "../../../redux/slice/favoriteSlice";
+import ApplyJob from "../Application/ApplyJob";
 
 const JobByIdComp: React.FC<JobByIdCompProps> = ({ job }) => {
   const router = useRouter();

@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
           <h3 className="text-xl font-semibold mb-4">Stay Connected</h3>
           <div className="flex justify-center md:justify-start space-x-6 mb-4">
             <a
-              href="https://github.com/yourusername"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-blue-300 transition-colors"
@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
               <FaGithub size={24} />
             </a>
             <a
-              href="https://www.linkedin.com/in/yourusername"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-blue-300 transition-colors"
@@ -60,7 +60,7 @@ const Footer: React.FC = () => {
               <FaLinkedin size={24} />
             </a>
             <a
-              href="https://twitter.com/yourusername"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-blue-300 transition-colors"

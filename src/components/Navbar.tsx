@@ -1,13 +1,14 @@
-import Image from "next/image";
+// components/Navbar.tsx
 import React, { useState } from "react";
 import { TiThMenu } from "react-icons/ti";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { MdClose } from "react-icons/md";
-import LOGO from "../../public/Image/LOGO.png";
+import { usePathname } from "next/navigation";
 import { useAppSelector } from "../../redux/hooks/hooks";
 import { RootState } from "../../redux/store";
+import Logo from "./Layout/logo";
+import NavLinks from "./Layout/Navlinks";
+import MobileNav from "./Layout/MobileNavbar";
 
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
@@ -20,42 +21,22 @@ const Navbar = () => {
 
   const toggleNav = () => setShowNav(!showNav);
 
-  const links = [
-    // { href: "/login", label: "Login" },
-    { href: "/create-job", label: "Create Job" },
-    { href: "/favorite-job", label: "Favorite Jobs" },
-    { href: "/applications", label: "Applications" },
-  ];
-
   return (
     <nav className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-md z-50">
       <div className="container mx-auto px-2 py-3 flex justify-between items-center">
-        <Link href="/" className="flex items-center">
-          <Image src={LOGO} alt="Job Finder" className="w-36 h-auto" priority />
-        </Link>
+        {/* Logo */}
+        <Logo />
 
+        {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 items-center">
-          {links.map((link, index) => (
-            <div key={index} className="relative">
-              <Link
-                href={link.href}
-                className={`px-4 py-2 rounded-md font-semibold text-gray-700 transition duration-300 ${
-                  isActive(link.href)
-                    ? "text-blue-700 bg-blue-100"
-                    : "hover:bg-blue-100 hover:text-blue-600"
-                }`}
-              >
-                {link.label}
-              </Link>
-              {link.label === "Favorite Jobs" && favorites.length > 0 && (
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs">
-                  {favorites.length}
-                </div>
-              )}
-            </div>
-          ))}
+          <NavLinks
+            links={["/create-job", "/favorite-job", "/applications"]}
+            isActive={isActive}
+            favorites={favorites}
+          />
         </div>
 
+        {/* Mobile Menu Toggle */}
         <button
           onClick={toggleNav}
           className="md:hidden text-gray-700 hover:text-blue-600"
@@ -64,6 +45,7 @@ const Navbar = () => {
         </button>
       </div>
 
+      {/* Mobile Navigation Menu */}
       <AnimatePresence>
         {showNav && (
           <motion.div
@@ -74,22 +56,12 @@ const Navbar = () => {
             className="fixed inset-0 z-50 md:hidden"
           >
             <div className="bg-blue-700/95 h-screen relative">
-              <div className="pt-14 px-2 flex gap-3 flex-col">
-                {links.map((link, index) => (
-                  <Link
-                    key={index}
-                    href={link.href}
-                    onClick={() => setShowNav(false)}
-                    className={`block text-xl font-semibold   p-2 rounded-md transition duration-300 ${
-                      isActive(link.href)
-                        ? "text-blue-700 bg-blue-100"
-                        : "hover:bg-blue-600 text-white"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
+              <MobileNav
+                links={["/create-job", "/favorite-job", "/applications"]}
+                isActive={isActive}
+                favorites={favorites}
+                toggleNav={toggleNav}
+              />
               <div className="flex absolute right-2 top-3 justify-end">
                 <button onClick={toggleNav} className="text-3xl text-white">
                   <MdClose />
@@ -97,6 +69,7 @@ const Navbar = () => {
               </div>
             </div>
 
+            {/* Contact Info */}
             <div className="mt-10 text-center text-gray-700">
               <p className="text-lg font-bold">Contact Us</p>
               <p className="text-sm">01-000000</p>

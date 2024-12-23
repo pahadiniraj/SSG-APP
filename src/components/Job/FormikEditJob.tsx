@@ -1,38 +1,52 @@
 import { Form, Formik } from "formik";
-import { IoMdArrowRoundBack } from "react-icons/io";
-import { useRouter } from "next/navigation";
-import { createJobSchema } from "../../utils/Yup-Validation/CreateJobSchema";
 import { toast } from "react-toastify";
-import { useCreateJobMutation } from "../../redux/services/job";
 import { ClipLoader } from "react-spinners";
-import { CreateJobFormValues } from "../../utils/types/jobTypes";
+import { CreateJobFormValues } from "../../../utils/types/jobTypes";
 import {
-  ArrayField,
-  FileInputField,
-  InputField,
-} from "@/components/InputFieldsFormik";
-import { createJobInitialValues } from "../../utils/initialValues";
+  useGetJobByIdQuery,
+  useUpdateJobByIdMutation,
+} from "../../../redux/services/job";
+import { updateJobSchema } from "../../../utils/Yup-Validation/UpdateJobSchema";
+import { ArrayField, FileInputField, InputField } from "../InputFieldsFormik";
 
-const CreateJob = () => {
-  const [createJob, { isLoading }] = useCreateJobMutation();
-  const router = useRouter();
+const FormikEditJob = ({
+  jobId,
+  setIsOpen,
+}: {
+  jobId: string;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const [updateJob, { isLoading: isUpdating }] = useUpdateJobByIdMutation();
+  const { data, error, isLoading, refetch } = useGetJobByIdQuery(jobId);
+
+  const initialValues: CreateJobFormValues = data?.job
+    ? {
+        title: data.job.title || "",
+        company: data.job.company || "",
+        salary: data.job.salary || 0,
+        location: data.job.location || "",
+        description: data.job.description || [""],
+        jobSpecification: data.job.jobSpecification || [""],
+        companyImg: "",
+      }
+    : {
+        title: "",
+        company: "",
+        salary: 0,
+        location: "",
+        description: [""],
+        jobSpecification: [""],
+        companyImg: "",
+      };
 
   const handleSubmit = async (values: CreateJobFormValues) => {
-    const isConfirmed = window.confirm(
-      "Do you confirm the details before submitting?"
-    );
-
-    if (!isConfirmed) {
-      return;
-    }
-
     try {
       const formData = new FormData();
       formData.append("title", values.title);
       formData.append("company", values.company);
       formData.append("salary", String(values.salary));
-      formData.append("description", JSON.stringify(values.description));
       formData.append("location", values.location);
+      formData.append("description", JSON.stringify(values.description));
       formData.append(
         "jobSpecification",
         JSON.stringify(values.jobSpecification)
@@ -41,28 +55,35 @@ const CreateJob = () => {
         formData.append("companyImg", values.companyImg);
       }
 
-      const response = await createJob(formData as unknown as any).unwrap();
+      const response = await updateJob({
+        jobId,
+        data: formData,
+      }).unwrap();
       toast.success(response.message);
-      router.push("/");
+      refetch();
+      setIsOpen(false);
     } catch (error: any) {
-      console.log(error);
-      toast.error(error.message || "Failed to create Job");
+      console.error(error);
+      toast.error(error.message || "Failed to update Job");
     }
   };
 
+  // Handle loading state, if data is still being fetched
+  if (isLoading) {
+    return <ClipLoader color="#000" size={50} />;
+  }
+
+  // Handle error state
+  if (error) {
+    return <div>Error fetching job details</div>;
+  }
+
   return (
-    <div className="w-full mt-32 p-6">
-      <button
-        className="flex justify-center items-center gap-1 my-2 hover:text-blue-500 duration-200"
-        onClick={() => router.push("/")}
-      >
-        <IoMdArrowRoundBack />
-        back
-      </button>
-      <h2 className="text-2xl font-bold text-gray-700 mb-4">Create New Job</h2>
+    <div className="w-full">
+      <h2 className="text-2xl font-bold text-gray-700 mb-4">Update Job</h2>
       <Formik
-        initialValues={createJobInitialValues}
-        validationSchema={createJobSchema}
+        initialValues={initialValues}
+        validationSchema={updateJobSchema}
         onSubmit={handleSubmit}
       >
         {({ setFieldValue, isValid }) => (
@@ -93,7 +114,7 @@ const CreateJob = () => {
               <FileInputField
                 label="Company Image"
                 name="companyImg"
-                existingUrl={createJobInitialValues.companyImg}
+                existingUrl={initialValues.companyImg}
                 setFieldValue={setFieldValue}
               />
               <ArrayField
@@ -105,10 +126,10 @@ const CreateJob = () => {
                 type="submit"
                 disabled={!isValid || isLoading}
                 className={`w-full flex justify-center items-center bg-blue-500 text-white p-2 rounded-md mt-4 hover:bg-blue-600 duration-200 ${
-                  isLoading ? "cursor-not-allowed opacity-50" : ""
+                  isUpdating ? "cursor-not-allowed opacity-50" : ""
                 }`}
               >
-                {isLoading ? (
+                {isUpdating ? (
                   <ClipLoader color="#fff" size={20} />
                 ) : (
                   "Create Job"
@@ -122,4 +143,4 @@ const CreateJob = () => {
   );
 };
 
-export default CreateJob;
+export default FormikEditJob;

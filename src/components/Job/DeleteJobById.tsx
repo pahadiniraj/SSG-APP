@@ -1,11 +1,10 @@
-// components/DeleteJobButton.tsx
 import React from "react";
 import { MdDelete } from "react-icons/md";
-import { useDeleteJobByIdMutation } from "../../redux/services/job";
+import { useDeleteJobByIdMutation } from "../../../redux/services/job";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
-import { JobIdButtonProps } from "../../utils/types/jobTypes";
+import { JobIdButtonProps } from "../../../utils/types/jobTypes";
 
 const DeleteJobButton: React.FC<JobIdButtonProps> = ({ jobId }) => {
   const router = useRouter();

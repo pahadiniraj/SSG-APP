@@ -1,9 +1,9 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
-import { useCreateApplicationMutation } from "../../redux/services/application";
-import { CreateApplicationFormValues } from "../../utils/types/applicationType";
-import applicationValidationSchema from "../../utils/Yup-Validation/CreateApplicationSchema";
+import { useCreateApplicationMutation } from "../../../redux/services/application";
+import { CreateApplicationFormValues } from "../../../utils/types/applicationType";
+import applicationValidationSchema from "../../../utils/Yup-Validation/CreateApplicationSchema";
 import { useRouter } from "next/router";
 
 const FormikCreateApplication = ({ jobId }: { jobId: string }) => {
@@ -11,9 +11,8 @@ const FormikCreateApplication = ({ jobId }: { jobId: string }) => {
     useCreateApplicationMutation();
   const router = useRouter();
 
-  // Initial values for the form
   const initialValues: CreateApplicationFormValues = {
-    jobId: jobId, // Ensure the jobId is passed as a prop to the component
+    jobId: jobId,
     fullname: "",
     email: "",
     resume: null,

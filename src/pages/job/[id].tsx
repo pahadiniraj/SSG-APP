@@ -1,6 +1,6 @@
 import React from "react";
 import { GetStaticProps, GetStaticPaths } from "next";
-import JobByIdComp from "@/components/JobByIdComp";
+import JobByIdComp from "@/components/Job/JobByIdComp";
 import { Job, JobByIdPageProps } from "../../../utils/types/jobTypes";
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -11,10 +11,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
       );
     }
 
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     const response = await fetch(`${API_URL}/api/job`);
-    console.log(response);
     if (!response.ok) {
       throw new Error(`Failed to fetch job paths: ${response.statusText}`);
     }
@@ -38,7 +37,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params as { id: string };
-  console.log("id in client", id);
 
   try {
     if (!process.env.NEXT_PUBLIC_API_URL) {
@@ -47,12 +45,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
       );
     }
 
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     const response = await fetch(`${API_URL}/api/job/${id}`);
-
-    console.log(response);
-
     if (!response.ok) {
       throw new Error(`Failed to fetch job data: ${response.statusText}`);
     }
