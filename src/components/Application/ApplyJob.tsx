@@ -8,7 +8,6 @@ const ApplyJob: React.FC<JobIdButtonProps> = ({ jobId }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleApply = () => {
-    console.log(jobId);
     setIsOpen(!isOpen);
   };
 

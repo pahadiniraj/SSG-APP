@@ -10,7 +10,7 @@ import {
   ArrayField,
   FileInputField,
   InputField,
-} from "@/components/InputFieldsFormik";
+} from "@/components/Layout/InputFieldsFormik";
 import { createJobInitialValues } from "../../utils/initialValues";
 
 const CreateJob = () => {

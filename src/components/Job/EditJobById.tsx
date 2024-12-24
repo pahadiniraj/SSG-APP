@@ -8,7 +8,6 @@ const EditJobById: React.FC<JobIdButtonProps> = ({ jobId }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
-    console.log(jobId);
     setIsOpen(!isOpen);
   };
 

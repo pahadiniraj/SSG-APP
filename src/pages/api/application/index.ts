@@ -36,8 +36,6 @@ export default async function handler(
           ? fields.email[0]
           : fields.email;
 
-        console.log(jobId, fullname, email);
-
         const resumeFile = files.resume ? files.resume[0] : null;
         const coverLetterFile = files.coverLetter ? files.coverLetter[0] : null;
 

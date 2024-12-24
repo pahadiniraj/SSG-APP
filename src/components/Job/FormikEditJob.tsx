@@ -7,7 +7,11 @@ import {
   useUpdateJobByIdMutation,
 } from "../../../redux/services/job";
 import { updateJobSchema } from "../../../utils/Yup-Validation/UpdateJobSchema";
-import { ArrayField, FileInputField, InputField } from "../InputFieldsFormik";
+import {
+  ArrayField,
+  FileInputField,
+  InputField,
+} from "../Layout/InputFieldsFormik";
 
 const FormikEditJob = ({
   jobId,

@@ -1,9 +1,9 @@
-import HeroSection from "@/components/HeroSection";
+import HeroSection from "@/components/Layout/HeroSection";
 import { useSearchParams } from "next/navigation";
 import { GetStaticProps } from "next";
 
 import { Job, JobPageProps } from "../../utils/types/jobTypes";
-import Pegination from "@/components/Pegination";
+import Pegination from "@/components/Layout/Pegination";
 import AllJobs from "@/components/Job/AllJobs";
 
 export const getStaticProps: GetStaticProps = async () => {

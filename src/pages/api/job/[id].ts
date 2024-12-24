@@ -9,6 +9,7 @@ import {
 import { IncomingForm } from "formidable";
 import { jobUpdateValidationSchema } from "../../../../utils/Joi-Validation/updateJob";
 import fs from "fs";
+import Application from "../../../../lib/modals/application";
 
 export const config = {
   api: {
@@ -48,8 +49,6 @@ export default async function handler(
       });
     }
   } else if (req.method === "PUT") {
-    console.log("PUT request received with id:", id);
-
     const form = new IncomingForm();
     form.parse(req, async (err, fields, files) => {
       if (err) {
@@ -65,8 +64,6 @@ export default async function handler(
         description,
         jobSpecification,
       } = fields;
-
-      console.log(fields);
 
       const titleValue = Array.isArray(title) ? title[0] : title;
       const companyValue = Array.isArray(company) ? company[0] : company;
@@ -132,7 +129,6 @@ export default async function handler(
         if (!job) {
           return res.status(404).json({ error: "Job not found" });
         }
-        // Update only the provided fields
         if (titleValue !== undefined && titleValue !== "")
           job.title = titleValue;
         if (companyValue !== undefined && companyValue !== "")
@@ -187,9 +183,29 @@ export default async function handler(
       if (companyImgPublicId) {
         await deleteFromCloudinary(companyImgPublicId);
       }
+      const applications = await Application.find({ jobId: id });
+
+      for (const application of applications) {
+        if (application.resume) {
+          const resumePublicId = extractPublicIdFromUrl(application.resume);
+          if (resumePublicId) {
+            await deleteFromCloudinary(resumePublicId);
+          }
+        }
+
+        if (application.coverLetter) {
+          const coverLetterPublicId = extractPublicIdFromUrl(
+            application.coverLetter
+          );
+          if (coverLetterPublicId) {
+            await deleteFromCloudinary(coverLetterPublicId);
+          }
+        }
+      }
+      const deletedApplications = await Application.deleteMany({ jobId: id });
 
       return res.status(200).json({
-        message: ` ${deletedJob.title} Job from  ${deletedJob.company} company has been deleted `,
+        message: ` ${deletedJob.title} job from ${deletedJob.company} company has been deleted, and ${deletedApplications.deletedCount} associated applications have also been deleted.`,
         success: true,
       });
     } catch (error: any) {

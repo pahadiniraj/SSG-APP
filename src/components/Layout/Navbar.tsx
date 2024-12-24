@@ -4,11 +4,11 @@ import { TiThMenu } from "react-icons/ti";
 import { motion, AnimatePresence } from "framer-motion";
 import { MdClose } from "react-icons/md";
 import { usePathname } from "next/navigation";
-import { useAppSelector } from "../../redux/hooks/hooks";
-import { RootState } from "../../redux/store";
-import Logo from "./Layout/logo";
-import NavLinks from "./Layout/Navlinks";
-import MobileNav from "./Layout/MobileNavbar";
+import { useAppSelector } from "../../../redux/hooks/hooks";
+import { RootState } from "../../../redux/store";
+import Logo from "./logo";
+import NavLinks from "./Navlinks";
+import MobileNav from "./MobileNavbar";
 
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
