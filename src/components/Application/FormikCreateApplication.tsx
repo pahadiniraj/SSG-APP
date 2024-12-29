@@ -50,13 +50,6 @@ const FormikCreateApplication = ({ jobId }: { jobId: string }) => {
     }
   };
 
-  // Handle loading state, if data is still being fetched
-  if (isSubmitting) {
-    return <ClipLoader color="#000" size={25} />;
-  }
-
-  // Handle error state
-
   return (
     <div className="w-full">
       <h2 className="text-2xl font-bold text-gray-700 mb-4">
@@ -118,7 +111,7 @@ const FormikCreateApplication = ({ jobId }: { jobId: string }) => {
                   htmlFor="resume"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Resume (PDF, DOCX)
+                  Resume (PDF)
                 </label>
                 <input
                   type="file"
@@ -143,7 +136,7 @@ const FormikCreateApplication = ({ jobId }: { jobId: string }) => {
                   htmlFor="coverLetter"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Cover Letter (PDF, DOCX)
+                  Cover Letter (PDF)
                 </label>
                 <input
                   type="file"
