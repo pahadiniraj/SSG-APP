@@ -4,6 +4,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 const connect = async () => {
   const connection = mongoose.connection.readyState;
+  console.log(connection);
 
   if (connection === 1) {
     console.log("Already connected");
@@ -15,6 +16,7 @@ const connect = async () => {
   }
 
   try {
+    console.log(connection);
     await mongoose.connect(MONGODB_URI!, {
       dbName: "joblistingapp",
       bufferCommands: true,
